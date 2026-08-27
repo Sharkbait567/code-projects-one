@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crazy Space Magic — Mind Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0b12;
+    --bg-panel:#12142200;
+    --line:#3a3f66;
+    --line-glow:rgba(120,140,255,0.25);
+    --text-primary:#eae8f4;
+    --text-secondary:#8d8fa6;
+    --text-faint:#5c5e78;
+    --c-blue:#4a9eff;
+    --c-orange:#ff8a3d;
+    --c-yellow:#f2c94c;
+    --c-pink:#ff5c93;
+    --c-purple:#a855f7;
+    --c-green:#9cff57;
+    --c-red:#ff4d4d;
+    --font-display:'Chakra Petch', sans-serif;
+    --font-body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .csm-wrap{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, #1b1e38 0%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 10% 20%, #ffffff55 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 80% 15%, #ffffff40 50%, transparent 51%),
+      radial-gradient(1px 1px at 60% 60%, #ffffff35 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 30% 80%, #ffffff30 50%, transparent 51%),
+      radial-gradient(1px 1px at 90% 70%, #ffffff30 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 45% 40%, #ffffff25 50%, transparent 51%),
+      var(--bg-deep);
+    background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: auto, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px;
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    min-height:100vh;
+    padding:44px 18px 80px;
+  }
+  .csm-header{
+    text-align:center;
+    max-width:720px;
+    margin:0 auto 46px;
+  }
+  .csm-eyebrow{
+    font-family:var(--font-display);
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--text-secondary);
+    margin-bottom:14px;
+  }
+  .csm-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(30px,6vw,52px);
+    letter-spacing:0.03em;
+    margin:0 0 10px;
+    background:conic-gradient(from 180deg, var(--c-blue), var(--c-green), var(--c-yellow), var(--c-orange), var(--c-red), var(--c-pink), var(--c-purple), var(--c-blue));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 22px rgba(140,150,255,0.25));
+  }
+  .csm-sub{
+    color:var(--text-secondary);
+    font-size:15px;
+    line-height:1.6;
+  }
+  .csm-controls{
+    display:flex; justify-content:center; gap:10px; margin-top:22px;
+  }
+  .csm-btn{
+    font-family:var(--font-display);
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--text-secondary);
+    padding:8px 16px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .csm-btn:hover{border-color:#7d82ff; color:var(--text-primary);}
+
+  .csm-tree-container{
+    max-width:880px;
+    margin:0 auto;
+  }
+
+  ul.tree, ul.tree ul{
+    list-style:none;
+    margin:0;
+    padding-left:34px;
+    position:relative;
+  }
+  ul.tree{padding-left:0;}
+  ul.tree > li{padding-left:0;}
+  ul.tree li{
+    position:relative;
+    padding:10px 0 10px 30px;
+  }
+  ul.tree > li{padding-left:0; padding-top:0;}
+  ul.tree ul li::before{
+    content:'';
+    position:absolute;
+    top:0; left:0;
+    border-left:2px solid var(--line);
+    height:100%;
+    box-shadow:0 0 8px var(--line-glow);
+  }
+  ul.tree ul li::after{
+    content:'';
+    position:absolute;
+    top:30px; left:0;
+    border-top:2px solid var(--line);
+    width:28px;
+    box-shadow:0 0 8px var(--line-glow);
+  }
+  ul.tree ul li:last-child::before{height:30px;}
+
+  .node{
+    display:inline-flex;
+    flex-direction:column;
+    gap:4px;
+    cursor:pointer;
+    padding:10px 16px;
+    background:linear-gradient(180deg, #151830cc, #101228cc);
+    border:1px solid var(--line);
+    border-left:3px solid var(--line);
+    border-radius:3px;
+    clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    max-width:560px;
+    transition:border-color .15s, box-shadow .15s, transform .1s;
+  }
+  .node:hover{transform:translateX(2px);}
+  .node.leaf{cursor:default;}
+  .node .eyebrow{
+    font-family:var(--font-display);
+    font-size:10px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    display:flex; align-items:center; gap:6px;
+  }
+  .node .title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16px;
+    color:var(--text-primary);
+    display:flex; align-items:center; gap:8px;
+  }
+  .node .desc{
+    font-size:13px;
+    line-height:1.5;
+    color:var(--text-secondary);
+    max-width:480px;
+  }
+  .dot{
+    width:9px;height:9px;border-radius:50%;
+    display:inline-block;
+    box-shadow:0 0 6px currentColor;
+  }
+  .toggle{
+    font-family:var(--font-display);
+    font-size:11px;
+    color:var(--text-faint);
+    margin-left:auto;
+    padding-left:10px;
+  }
+  li.has-children > .node .title::after{
+    content:'';
+  }
+
+  /* category coloring */
+  .n-root{border-left-color:#8d8fa6;}
+  .n-blue{border-left-color:var(--c-blue);} .n-blue .eyebrow,.n-blue .dot.blue{color:var(--c-blue);}
+  .n-orange{border-left-color:var(--c-orange);} .n-orange .eyebrow{color:var(--c-orange);}
+  .n-yellow{border-left-color:var(--c-yellow);} .n-yellow .eyebrow{color:var(--c-yellow);}
+  .n-pink{border-left-color:var(--c-pink);} .n-pink .eyebrow{color:var(--c-pink);}
+  .n-purple{border-left-color:var(--c-purple);} .n-purple .eyebrow{color:var(--c-purple);}
+  .n-green{border-left-color:var(--c-green);} .n-green .eyebrow{color:var(--c-green);}
+  .n-red{border-left-color:var(--c-red);} .n-red .eyebrow{color:var(--c-red);}
+  .n-neutral{border-left-color:#8d8fa6;}
+
+  .dot.blue{background:var(--c-blue); color:var(--c-blue);}
+  .dot.orange{background:var(--c-orange); color:var(--c-orange);}
+  .dot.yellow{background:var(--c-yellow); color:var(--c-yellow);}
+  .dot.pink{background:var(--c-pink); color:var(--c-pink);}
+  .dot.purple{background:var(--c-purple); color:var(--c-purple);}
+  .dot.green{background:var(--c-green); color:var(--c-green);}
+  .dot.red{background:var(--c-red); color:var(--c-red);}
+  .dot.grey{background:#5c5e78; color:#5c5e78;}
+
+  .node.pending{
+    border-style:dashed;
+    border-left-style:solid;
+    opacity:0.6;
+  }
+  .node.pending .title{color:var(--text-secondary); font-style:italic;}
+
+  li.collapsed > ul{display:none;}
+  li.has-children > .node .toggle::before{content:'– collapse';}
+  li.collapsed > .node .toggle::before{content:'+ expand';}
+
+  .beat-num{
+    font-family:var(--font-display);
+    color:var(--text-faint);
+    font-size:12px;
+    margin-right:4px;
+  }
+
+  @media (max-width:560px){
+    ul.tree, ul.tree ul{padding-left:20px;}
+    ul.tree li{padding-left:20px;}
+    ul.tree ul li::after{width:18px;}
+    .node{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="csm-wrap">
+
+  <div class="csm-header">
+    <div class="csm-eyebrow">Franchise Mind Map · Draft in progress</div>
+    <h1 class="csm-title">CRAZY SPACE MAGIC</h1>
+    <p class="csm-sub">Click any branch to expand or collapse it. This grows as we keep talking — nothing here is final.</p>
+    <div class="csm-controls">
+      <button class="csm-btn" id="expandAll">Expand All</button>
+      <button class="csm-btn" id="collapseAll">Collapse All</button>
+    </div>
+  </div>
+
+  <div class="csm-tree-container">
+    <ul class="tree">
+      <li class="has-children">
+        <div class="node n-root">
+          <div class="eyebrow">Franchise</div>
+          <div class="title">Crazy Space Magic <span class="toggle"></span></div>
+        </div>
+        <ul>
+
+          <!-- MAGIC SYSTEM -->
+          <li class="has-children">
+            <div class="node n-neutral">
+              <div class="eyebrow">Core System</div>
+              <div class="title">The Crystals <span class="toggle"></span></div>
+              <div class="desc">Colored-light crystals placed into a fresh human corpse reanimate the body and grant a superpower. Seven colors, "ROYGBIV" — whichever crystal(s) someone carries shows up as their glowing eye color(s).</div>
+            </div>
+            <ul>
+              <li>
+                <div class="node leaf n-red">
+                  <div class="eyebrow"><span class="dot red"></span>Red</div>
+                  <div class="title">Heat / Its Exhaust</div>
+                  <div class="desc">Firebending, effectively — needs something flammable nearby. Easy on an oxygen-rich world like Earth. Matters elsewhere.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-blue">
+                  <div class="eyebrow"><span class="dot blue"></span>Blue</div>
+                  <div class="title">Full Cowling</div>
+                  <div class="desc">Enhanced speed, strength, and agility — Deku's One For All, full-cowling style.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-orange">
+                  <div class="eyebrow"><span class="dot orange"></span>Orange</div>
+                  <div class="title">Genetic Control</div>
+                  <div class="desc">Control over the ~30% of surface DNA that separates a human from other vertebrates. Vertebrates only.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-yellow">
+                  <div class="eyebrow"><span class="dot yellow"></span>Yellow</div>
+                  <div class="title">Gravity Control</div>
+                  <div class="desc">Float self or others; increase gravity at chosen points for raw strength. Floaty feet, powerscaling fists.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-pink">
+                  <div class="eyebrow"><span class="dot pink"></span>Pink</div>
+                  <div class="title">Protein / Organic Control</div>
+                  <div class="desc">Move tissue and protein at will — heal, rupture a body with a touch, bend blood and fluids, grow plant or organic matter (including yourself).</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-purple">
+                  <div class="eyebrow"><span class="dot purple"></span>Purple</div>
+                  <div class="title">Portals / Pocket Dimension</div>
+                  <div class="desc">Warp portals via a pocket dimension folded between matter — "syrup on a waffle." Has its own franchise-wide lore, still unfolding.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-green">
+                  <div class="eyebrow"><span class="dot green"></span>Green</div>
+                  <div class="title">The Wildcard</div>
+                  <div class="desc">Paired with any other color, it randomly scrambles or negates that color's ability. The unstable variable in every power combo.</div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <!-- THE GRONAR -->
+          <li class="has-children">
+            <div class="node n-neutral">
+              <div class="eyebrow">Antagonists</div>
+              <div class="title">The Gronar <span class="toggle"></span></div>
+              <div class="desc">Primary antagonists of the whole franchise. Only teased and hinted at across Arc 1.</div>
+            </div>
+            <ul>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">Shepherds Without a Name</div>
+                  <div class="desc">A race that moves planet to planet, cultivating a massive flesh-creature hive mind the crew calls "The Rot." "The Gronar" isn't even what they call themselves — they have no verbal or written language. That matters.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Rot</div>
+                  <div class="desc">A parasite that inhabits any animal and turns it into a flesh-like zombie freak.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf pending">
+                  <div class="eyebrow">Open Thread</div>
+                  <div class="title">Why are they hunting the crew? Why is the Scarred Man helping them?</div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <!-- SEASON 1 -->
+          <li class="has-children">
+            <div class="node n-neutral">
+              <div class="eyebrow">Season 1</div>
+              <div class="title">Arc 1 – Arc 3 <span class="toggle"></span></div>
+              <div class="desc">Starts modern-day Earth, 2020s — expands out into the galaxy.</div>
+            </div>
+            <ul>
+
+              <!-- CREW -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Ensemble</div>
+                  <div class="title">The Crew <span class="toggle"></span></div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node leaf n-blue">
+                      <div class="eyebrow"><span class="dot blue"></span><span class="dot green"></span>Blue + Green</div>
+                      <div class="title">Michael</div>
+                      <div class="desc">Comp-sci grad, a way with machines and gadgets. Badly bullied in college, graduated with honors anyway. Dies, is reanimated — gets control over metal and electronics, but green strips the physical enhancement. Protagonist.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-yellow">
+                      <div class="eyebrow"><span class="dot yellow"></span>Yellow</div>
+                      <div class="title">Evan</div>
+                      <div class="desc">White, Irish Catholic, from a hockey family in Rhode Island. Introduced later. Gravity control.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-pink">
+                      <div class="eyebrow"><span class="dot pink"></span>Pink</div>
+                      <div class="title">Alex</div>
+                      <div class="desc">Korean-Vietnamese, made it through med school, took a gap year before residency. Protein / organic matter control — but she never died. Born with it, inherited from her mother Michelle ("Mickey"), who vanished in the early 2000s. Raised by her grandparents and her aunt, Val/Hillary, Michelle's younger sister.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="eyebrow"><span class="dot grey"></span>No Powers</div>
+                      <div class="title">Gabby</div>
+                      <div class="desc">Italian, blonde, deep into nerdy/conspiracy stuff — aliens, Area 51. Ronaldo from Steven Universe, if Ronaldo ran a Tumblr blog and was a girl. A normie — never died, no crystal. Alex's best friend since childhood.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-orange">
+                      <div class="eyebrow"><span class="dot orange"></span>Orange</div>
+                      <div class="title">Kip</div>
+                      <div class="desc">Small in stature, racially ambiguous, can turn into animals. Her power is the crux the other characters revolve around. First seen as a white tiger, orange stripes, glowing orange eyes.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-purple">
+                      <div class="eyebrow"><span class="dot purple"></span><span class="dot green"></span>Purple + Green</div>
+                      <div class="title">The Scarred Man</div>
+                      <div class="desc">Large Black man, facial scars, morgue janitor. Phases through solid matter like Shadowcat — no portals though. Implants Michael's crystal. Eyes glow one green, one purple.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf pending">
+                      <div class="eyebrow">Open Thread</div>
+                      <div class="title">+ more crew to come</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- EPISODE 1 -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Episode 1</div>
+                  <div class="title">Cold Open <span class="toggle"></span></div>
+                  <div class="desc">Setting: an unnamed, well-off lower-NY suburb — Scarsdale-adjacent.</div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">01</span>The Party</div>
+                      <div class="desc">Michael's graduation party at his parents' house. Extended family shows, no real friends do — we learn he was badly bullied in college despite graduating with honors.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">02</span>The Crash</div>
+                      <div class="desc">Party fizzles out. Michael drives out for ice, catches a strange figure in his window, crashes. Dies.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">03</span>The Morgue</div>
+                      <div class="desc">Coroner clocks out, bumps the scarred janitor. He reopens Michael's chest sutures, sets a crystal — swirling green and blue — under the heart, restitches.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">04</span>The Wake-Up</div>
+                      <div class="desc">Instruments float, lights flicker. Michael wakes screaming, one eye green, one blue, shorting out every light in the room.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">05</span>The Chase</div>
+                      <div class="desc">Michael flees the hospital, the scarred man on and off his tail, through city traffic and into the woods.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">06</span>Cornered</div>
+                      <div class="desc">Two shadow figures — lanky, grey rubbery skin, no face, three-fingered, rumbling head-membrane — corner him with a thorned pink orb. Kip drops from a tree as a white, orange-striped tiger. End of episode.</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- KIP'S MYSTERY -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Slow Burn</div>
+                  <div class="title">Kip's Mystery <span class="toggle"></span></div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="desc">Reads as early teens. Says she's lived in a tree in the woods for only two years.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="desc">Understands Michael's powers in a way that feels foreign to the rest of the group.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="desc">Keeps saying "earth humans" — despite being human herself and knowing it. Talks in early-2000s teen slang despite looking so young.</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- ARC 1 REST -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Arc 1</div>
+                  <div class="title">The Rest of the Arc <span class="toggle"></span></div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">07</span>Finding Evan</div>
+                      <div class="desc">Kip and Michael find Evan passed out drunk on a city sidewalk at night, then watch him fight off a Rot-infected horde of clams in the river, acting as one massive monster.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">08</span>Gabby's Sleuthing</div>
+                      <div class="desc">Gabby's been digging into missing-persons cases and reports of strange bright-eyed people surfacing in homeless shelters, then vanishing.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">09</span>The Penthouse</div>
+                      <div class="desc">Gabby and Alex live together in a penthouse funded by Alex's aunt's husband, Joon/Joonie — a hugely wealthy, Korean-born Singaporean business mogul. It gets trashed after run-ins with infected animals and a string of near-death escapes.</div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node leaf n-neutral">
+                      <div class="title"><span class="beat-num">10</span>Taken to D.C.</div>
+                      <div class="desc">The group is caught by the U.S. government and dragged to Washington for unknown reasons. End of Arc 1.</div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- ARC 2 -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Arc 2</div>
+                  <div class="title">Galactic <span class="toggle"></span></div>
+                </div>
+                <ul>
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="title">The Reveal <span class="toggle"></span></div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Michelle (Alex's mom) has been raising Kip and her adopted siblings in space for years — she disappeared and was warped away using the same tech the federation powers with the crystals.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc"><strong>Major reveal:</strong> the crystals were never meant to bring people back from the dead. Their real purpose is powering federation technology — reanimation is a side effect. Exactly why the federation is so fixated on why the Gronar want them, and on the crew.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">The gang learns they aren't the only powered humans. The crystals are leftover tech from an alien race that ruled the Milky Way for eons, then vanished.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">The U.S. government already knows aliens exist. A galactic federation wants to trade with humanity — for our food and cuisine specifically, not tech or weapons.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">The federation is also quietly interested in the powered humans. A Larili scientist vanished investigating an abandoned facility left by the "Valakor"/old empire — full of the same crystals, but raided by the Gronar. Odd, since the Gronar had never made a move like that before.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">With federation help, the U.N./participating nations train the crew and send them across the galaxy — first as a PR "heroes of the collective front" campaign meant to intimidate the Gronar, then to search planet to planet for clues. Which countries opt in plays into a racism/prejudice theme.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- TRAINING ARC -->
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="eyebrow">Arc 2</div>
+                      <div class="title">The Training Arc <span class="toggle"></span></div>
+                      <div class="desc">The crew learns to use their powers, splits into teams, and travels planet to planet via purple-crystal portals — no spacecraft needed.</div>
+                    </div>
+                    <ul>
+                      <li class="has-children">
+                        <div class="node n-yellow">
+                          <div class="eyebrow">Evan's Thread</div>
+                          <div class="title">The Ice Planet <span class="toggle"></span></div>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Sent out alongside two normie researchers. Meets Sophia — portal user, Kip's older sister — without realizing who she is. They save each other's lives.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">After a string of misunderstandings and action beats, they make it to the Depot to meet up with everyone else.</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li class="has-children">
+                        <div class="node n-pink">
+                          <div class="eyebrow">Alex & Kip's Thread</div>
+                          <div class="title">The Vokai Homeworld <span class="toggle"></span></div>
+                          <div class="desc">An ocean planet with no continents — just living islands, giant organisms with life evolved specifically to live on their backs. The Vokai are the most advanced of that life. Alex and Kip don't get along here: Alex is ashamed of her power and scared to use it (why she never finished residency); Kip is fully comfortable shifting and causing mayhem. Paired with a military trainer, Sarahlyn, who works on Kip's self-control and humanity — a sweet arc, since we first meet Kip pretty feral.</div>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="title">Sarahlyn's Infection</div>
+                              <div class="desc">Sarahlyn has been infected by the Rot, which speaks to her telepathically through a neck wound wired into her nervous system. The Rot encases a host's brain without killing it, but a human brain is too big to fully envelop — so it stays partially infected, just enough to communicate, give orders, and cause nose/eye bleeding when it "demands an audience." Sarahlyn gets periodic nosebleeds — that matters. The pain is unbearable.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="title">Sarahlyn's Death</div>
+                              <div class="desc">She ultimately dies by feeding herself to one of the homeworld's predators — a horrifying moment for Kip. The two are then separated.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf pending">
+                              <div class="eyebrow">Open Thread</div>
+                              <div class="title">The Blight</div>
+                              <div class="desc">Alex works to heal a sick living island afflicted by a mysterious black-veined disease — teased by the Vokai as slow-killing and ancient. Not yet named in-story.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-purple">
+                              <div class="eyebrow">Paid Off in Arc 3</div>
+                              <div class="title">Krafta</div>
+                              <div class="desc">While Alex handles the Blight, Kip deals with Sarahlyn's death and bazaar raiders led by Krafta, a Larili rogue bounty hunter Kip recognizes on sight ("some scrub who doesn't know how to take no for an answer"). His history with the family, and his death, land later — see Arc 3 → Krafta's Last Stand.</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li class="has-children">
+                        <div class="node n-neutral">
+                          <div class="eyebrow">Michael & Gabby's Thread</div>
+                          <div class="title">Desert Planet → The Depot <span class="toggle"></span></div>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Sent to a desert planet, then portal-transfer to a bazaar planet in the dark sector — thick with bandits and criminals, known as "the Depot." Paired with a military guide who doesn't survive long.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">The plan all along: every team splits off, then rendezvous at the Depot.</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- REUNION -->
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="eyebrow">Arc 2</div>
+                      <div class="title">The Reunion <span class="toggle"></span></div>
+                      <div class="desc">At the Depot — Kip and Alex arrive trailing Krafta.</div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Kip reunites with her siblings. Alex reunites with her long-lost mother. A lot stays unanswered about Alex's parentage and who Michelle really is.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf pending">
+                          <div class="eyebrow">Spinoff Thread</div>
+                          <div class="title">Michelle's Real Story</div>
+                          <div class="desc">Michelle actually did die and was brought back with the crystal method in the '90s, as a teenager — her younger sister Val/Hillary was there and knew. They were saved from the Gronar by a strange man in a shack in a Northern California suburb (Michelle and Val's old neighborhood), who has his own battle to fight later on.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="title">Kip's Family <span class="toggle"></span></div>
+                      <div class="desc">Kip is human but wasn't raised on Earth. Left behind two years ago by a found-family with no blood relation to her — raised by Alex's long-lost mother, Michelle/Mickey, aboard the ship-turned-satellite-base she set up next to a planet called Baddera.</div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-purple">
+                          <div class="eyebrow"><span class="dot purple"></span>Purple</div>
+                          <div class="title">Sophia</div>
+                          <div class="desc">Kip's older sister — the oldest of the siblings. Portal user. Black woman, similar age to the crew; speaks like Kip but with a slightly more mature tone.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-blue">
+                          <div class="eyebrow"><span class="dot blue"></span>Blue</div>
+                          <div class="title">Donovan</div>
+                          <div class="desc">Kip's older brother. Full cowling — enhanced speed, strength, agility. Black man, same age group. Clearly loves Kip and Sophia, but noticeably more off than the other two — almost like he's hiding something.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-blue">
+                          <div class="eyebrow"><span class="dot blue"></span><span class="dot red"></span>Blue + Red</div>
+                          <div class="title">Kara</div>
+                          <div class="desc">Kip's sibling — lost/died when they were younger. Photon blast powers. More on this later.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">The Badoowans</div>
+                          <div class="desc">Baddera's native race. Four-armed, short legs, deep navy-blue skin marbled with black. Own distinct language.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <!-- BADDERA & BADOOWAN CULTURE -->
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="title">Baddera & the Badoowan <span class="toggle"></span></div>
+                      <div class="desc">The crew settles into Michelle's satellite base above the planet, alongside two more Badoowan: a male, Clongna, and a female the siblings call "Nana."</div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">The Planet</div>
+                          <div class="desc">Mostly desert wasteland. The only major water source sits along the equator, in underwater springs and water tables — feeding a lush forest ring around the planet, with mountains and desert beyond it.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">Nomadic Life</div>
+                          <div class="desc">The Badoowan venture seasonally into the desert wastes, then return to the forest to raise families in treehouse cities among blood-red trees that never fall. Predators mean tribes schedule "tree time" — hence 4 arms, monkey-like wrists for swinging, and deep black skin to survive the sun during "the great shuffle." The canopy is so thick almost no light reaches the floor. Falling means dying.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Badoowan culture matters deeply to the siblings and Michelle — they were accidentally portaled here (following the events of Michelle's spinoff) and were taken in and raised by the Badoowan.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf pending">
+                          <div class="eyebrow">Season 2 Teaser</div>
+                          <div class="title">Violet</div>
+                          <div class="desc">The Badoowan raised another human before the siblings arrived as babies — a girl named Violet. Her story is the crux of Season 2, once the crew wraps Season 1.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+
+              <!-- ARC 3 -->
+              <li class="has-children">
+                <div class="node n-neutral">
+                  <div class="eyebrow">Arc 3</div>
+                  <div class="title">Coming Home <span class="toggle"></span></div>
+                  <div class="desc">The reunion is messy, and even back "home" it feels ominous.</div>
+                </div>
+                <ul>
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="title">Krafta & Michelle <span class="toggle"></span></div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">The siblings show the crew around the satellite base. Alex has questions, and also picks up new tricks from her mother — who has the same power but far more experience, and nosebleeds. Foreshadowing.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">While the siblings take the crew for Badoowan hospitality with Nana, Michelle is left alone and clocks Krafta nearby — cloaked with a federation "light dispersal device," a green-and-yellow light field that hides or fully disguises the wearer via hologram. It's how Larili officers embedded in the White House stay disguised from the public before UN clearance to appear openly.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Michelle hired Krafta to find Kip after a portal disruption stranded her on Earth — disruptions that seem to be happening more often than usual lately.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-purple">
+                          <div class="desc">Portal mechanics: a portal opens into another dimension and back out somewhere else — how Sophia seems to teleport, and how she stores her weapon of choice, a Badoowan dual blade that opens like a scythe and links up to give a four-armed wielder two blades in four hands.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Michelle is furious the federation found Kip first — Krafta was supposed to be the best, and failed. She insists she's just protecting her family. Krafta knows more than he's saying, and tells her to come clean to her kids about the deal she made trading Violet's whereabouts — who's also gone missing now.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf pending">
+                          <div class="eyebrow">Open Thread</div>
+                          <div class="title">"Federation Lab Rats"</div>
+                          <div class="desc">Michelle clutches the back of her neck at Krafta's warning, then tells him to deal with "those federation lab rats," since "they have no idea what they were sent out here to find." Krafta cloaks and vanishes again.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="has-children">
+                    <div class="node n-neutral">
+                      <div class="title">Genoja / The Grox Empire <span class="toggle"></span></div>
+                      <div class="desc">After bonding with the siblings over childhood stories, the crew brings them along on the next federation-tour stop.</div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">The Grox</div>
+                          <div class="desc">A relatively new, warlike federation member. Massive bodies, huge badger-like digging front arms — their homeworld's surface gravity is so strong that life only survives floating in the dense atmosphere or miles underground. "Might makes right" culture. The siblings come along because their fighting prowess will matter here.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Genoja looks Earth-like at first, but the trip gets complicated fast: Kip is visibly uncomfortable being there, and Sophia tiptoes around Alex and Gabby given the tension.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf pending">
+                          <div class="eyebrow">Open Thread</div>
+                          <div class="title">The Resemblance</div>
+                          <div class="desc">Sophia doesn't know how Michelle is related to Alex — she just sees they look identical and share the same power, which is strange, since powers aren't supposed to happen in humans without a crystal or a preceding death.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">Marshagog</div>
+                          <div class="desc">The federation ambassador/head technician for the colony — an Akrna with a specialized gill gadget that lets him breathe any environment without a helmet. Bonds with Michael instantly over shared nerdom and gadgets.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">The crew gets similar tech installed in their throats during training and physical exams, since power heritability can only be confirmed by direct testing. The install triggers a tonsillitis-like immune reaction — unpleasant, temporary. Kip already had this done, years ago. That matters.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="desc">Genoja is a portal-hub colony — the massive portal machines need base turrets at set points, like train-station depots (the ice planet was one; the bazaar planet was a former depot, now abandoned and overrun with nightlife). Michael, Marshagog, and Kip go to fix a portal problem together — Kip offers muscle as an elephant when needed — while the rest of the group meets the site's foreman.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-yellow">
+                          <div class="title">The Foreman's Duel</div>
+                          <div class="desc">The foreman is a massive, "back in my day" Grox, openly disgusted at "little meatballs from Earth" repping the federation — not an unfair read, given humanity shows up country by country, unaligned, riddled with prejudice. Evan, raised for the military like his father, won't eat the disrespect. The foreman challenges him to a duel (a fist fight, Grox-style) — an adult Grox is roughly two hippos stacked; Evan's 5'10" at best. The crew calls it suicide, until the foreman's son hits on Gabby with something creepy about "offworld mating." Gabby: "kick his ass and don't hold back."</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">Splitting Up</div>
+                          <div class="desc">Sophia and Donovan head off to survey for their own mission; Alex tags along, quietly trying to get to know her siblings for the first time in her life — neither side is being honest yet about what's happening between them. Meanwhile Michael, Kip, and Marg push through the tunnels toward the portal disruption.</div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">The Tunnels & the Bandcrom Worm</div>
+                          <div class="desc">The whole planet is riddled with tunnels and cable runs feeding a central generator packed with crystals — blue for power, purple for portals. New tech seen here: a pink-light liquid-crystal solution that heals any injury on-site, and Gabby's arc-2 weapon, a voice-activated federation multi-staff that morphs into any named weapon, pre-loaded with Earth armaments. Michael's team hits a tunnel blown open by a "bandcrom worm" — a massive, ravenous rock-burrower. Too close to the generator, it risks a full meltdown and portal shutdown; it has to die or the crew is stranded for years waiting on repair shuttles.</div>
+                        </div>
+                      </li>
+                      <li class="has-children">
+                        <div class="node n-orange">
+                          <div class="eyebrow">Kip's Trauma</div>
+                          <div class="title">The Crealoth & Kara <span class="toggle"></span></div>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Kip has a real bond with animals, even lethal ones — like the "crealoth" ("swooping death" in Vokai), the tripwire-webbed, praying-mantis-limbed insect predator that killed Sarahlyn on the Vokai homeworld.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">It wasn't the creature that scarred Kip — walking away from that, she muttered "I'm sorry, Kara" under her breath. Sarahlyn reminded her of Kara, another of Michelle's kids.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Kip hates the Vokai homeworld because she'd been there before it was a colony — Kara fell into a hole just like the ones these worms leave, and was eaten. Presumably foreshadowing. Kip's real fear was never the animal — it's not being able to save the people she loves.</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">Sophia, Donovan & Alex vs. the Worm</div>
+                          <div class="desc">The three are hunting a worm of their own — they need a specific organ from its corpse. A tunnel collapse and the worm itself corner them. Alex fights with Earth plant-based tactics, Donovan ricochets wall to wall for the angle, Sophia coordinates with portals — they kill it, but the fight opens a sinkhole and Sophia and Alex fall through.</div>
+                        </div>
+                      </li>
+                      <li class="has-children">
+                        <div class="node n-purple">
+                          <div class="eyebrow">Krafta's Last Stand</div>
+                          <div class="title">The History & the Death <span class="toggle"></span></div>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Donovan panics and calls Krafta out in the dark, knowing he's been watching. Krafta and Donovan used to be friends — until Krafta started hitting on Michelle. She turned him down but kept things cordial for his services.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Backstory: a rough Larili bandit gang tied to Krafta — outlawed by the Larili homeworld as terrorists — once tried to sell Kip and Donovan into slavery as kids, pre-federation-expansion. Michelle cut a deal with the Gronar for her kids' protection after calling for Violet's help and getting no answer. That matters — Violet's story next season.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Krafta drops into the sinkhole where Alex is stranded and hurt, Sophia missing. He attacks; Alex is outmatched. Mid-fight he starts to explain who sent him to kill her — but before he can say Michelle's name, Sophia bursts through a portal behind him, blades out.</div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node leaf n-neutral">
+                              <div class="desc">Sophia surrounds him with portals on every side, Alex tag-teams in, and Donovan drops a rope and an explosive from above, collapsing the cave completely. Sophia and Alex portal out to open air. The worm is dead. Krafta is dead.</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node leaf n-neutral">
+                          <div class="title">Aftermath</div>
+                          <div class="desc">Donovan circles back to help Michael and Kip fix the generator, destabilized in the fight. Sophia and Alex catch their breath and apologize to each other — "she always wanted a sister," Sophia says, "well now you have 2." They hug it out. Generator fixed, portals back online, everyone surfaces just as Evan finishes off the foreman with Gabby whooping in excitement. Fight dies down, everyone regroups — on to the next episode.</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+
+                </ul>
+              </li>
+
+            </ul>
+          </li>
+
+          <!-- SPECIES CODEX -->
+          <li class="has-children">
+            <div class="node n-neutral">
+              <div class="eyebrow">Reference</div>
+              <div class="title">Species Codex <span class="toggle"></span></div>
+              <div class="desc">Every race met so far, gathered in one place — grows as the crew keeps traveling.</div>
+            </div>
+            <ul>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Larili</div>
+                  <div class="desc">Tall and lanky, backward-bent ostrich-like legs, one forward-facing arm pair, forward-facing eyes, bluish-green skin varying by individual. No mouth or nose — instead neck ports with dual voice boxes for any language or sound. Palm proboscises (like a butterfly's) drink nutrients from food and drink, which is why they came to humanity for trade. Krafta and the missing Valakor-facility scientist are both Larili.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Vokai</div>
+                  <div class="desc">Males are bug-like, bipedal, one tentacle pair for arms and one for legs. Females are much larger and the only ones who bear children — they die soon after giving birth. Own vocal language and civilization. Home to the crealoth.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Akrnas</div>
+                  <div class="desc">Amphibious, giant walking salamanders. Homeworld runs a methane/hydrogen-sulfide atmosphere. Became zealously devoted to human culture after an 80s human shuttle carrying artifacts and video games landed on their planet decades later, right as their civilization was starting — it became a monolith to them, Pac-Man and all. Marshagog is Akrna.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Grox</div>
+                  <div class="desc">A relatively new, warlike federation member. Massive bodies, huge badger-like digging front arms — homeworld gravity is so strong that life only survives floating in the dense atmosphere or miles underground. "Might makes right" culture. Met on their colony, Genoja.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf n-neutral">
+                  <div class="title">The Badoowans</div>
+                  <div class="desc">Native to Baddera. Four-armed, short legs, deep navy-blue skin marbled with black, own distinct language. Nomadic — desert wastes one season, blood-red-tree canopy cities the rest. Raised Kip's found-family, and Violet before them. Full culture detail lives under Baddera & the Badoowan.</div>
+                </div>
+              </li>
+              <li>
+                <div class="node leaf pending">
+                  <div class="eyebrow">Open Thread</div>
+                  <div class="title">+ more races to come</div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tree li').forEach(function(li){
+    if (li.querySelector(':scope > ul')) {
+      li.classList.add('has-children');
+    }
+  });
+
+  document.querySelectorAll('.tree li.has-children > .node').forEach(function(node){
+    node.addEventListener('click', function(e){
+      var li = node.parentElement;
+      li.classList.toggle('collapsed');
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click', function(){
+    document.querySelectorAll('.tree li.collapsed').forEach(function(li){ li.classList.remove('collapsed'); });
+  });
+  document.getElementById('collapseAll').addEventListener('click', function(){
+    document.querySelectorAll('.tree li.has-children').forEach(function(li){
+      // keep the root expanded so the map doesn't fully vanish
+      if (li.parentElement.classList.contains('tree')) return;
+      li.classList.add('collapsed');
+    });
+  });
+</script>
+</body>
+</html>
