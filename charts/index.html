@@ -22,7 +22,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
   }
-  .wrap { max-width: 860px; margin: 0 auto; }
+  .wrap { max-width: 880px; margin: 0 auto; }
   h1 {
     font-size: 1.9rem;
     margin: 0 0 0.25rem;
@@ -58,6 +58,8 @@
     font-size: 1.02rem;
   }
   li a:hover { color: var(--accent); text-decoration: underline; }
+  li.pending { opacity: 0.55; }
+  li.pending .name { font-weight: 600; font-size: 1.02rem; }
   .cat {
     color: var(--accent);
     font-size: 0.78rem;
@@ -65,6 +67,16 @@
     letter-spacing: 0.08em;
   }
   .date { color: var(--muted); font-size: 0.82rem; margin-left: auto; }
+  .tag-pending {
+    color: var(--muted);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    margin-left: auto;
+  }
   .empty { color: var(--muted); font-style: italic; font-size: 0.9rem; }
   footer { margin-top: 3.5rem; color: var(--muted); font-size: 0.8rem; }
   footer code { color: var(--accent); }
@@ -77,13 +89,58 @@
 
   <h2>stem-vault &mdash; STEM Vault / Sharkatech / Gaia Tech</h2>
   <ul>
-    <li class="empty-row">
-      <span class="empty">No charts published yet.</span>
+    <li class="pending">
+      <span class="name">Ouroboros Compound O &mdash; Chemistry Chart</span>
+      <span class="cat">stem-vault</span>
+      <span class="tag-pending">awaiting file</span>
+    </li>
+    <li class="pending">
+      <span class="name">Urban Lighting Shadow Simulation</span>
+      <span class="cat">stem-vault</span>
+      <span class="tag-pending">awaiting file</span>
     </li>
   </ul>
 
+  <h2>paladin &mdash; Paladin Project hardware</h2>
+  <ul>
+    <li class="pending">
+      <span class="name">Master Control Mask &mdash; Parametric Visual Blueprint</span>
+      <span class="cat">paladin</span>
+      <span class="tag-pending">awaiting file</span>
+    </li>
+    <li class="pending">
+      <span class="name">Master Control Gauntlet &mdash; System Communication Chart</span>
+      <span class="cat">paladin</span>
+      <span class="tag-pending">awaiting file</span>
+    </li>
+  </ul>
+
+  <h2>csm &mdash; Crazy Space Magic franchise</h2>
+  <ul>
+    <li>
+      <a href="csm/csm_mindmap.html">Crazy Space Magic &mdash; Franchise Mind Map</a>
+      <span class="cat">csm</span>
+      <span class="date">Added 2026-08-24</span>
+    </li>
+  </ul>
+
+  <h2>brain-fertilizer &mdash; Brain Fertilizer / Tigologyverse content tools</h2>
+  <ul>
+    <li class="pending">
+      <span class="name">BullSh*t Bingo &mdash; Media Literacy Game</span>
+      <span class="cat">brain-fertilizer</span>
+      <span class="tag-pending">awaiting file</span>
+    </li>
+  </ul>
+
+  <h2>gaia-tech &mdash; Gaia Tech infrastructure</h2>
+  <ul>
+    <li><span class="empty">No charts published yet.</span></li>
+  </ul>
+
   <footer>
-    New charts are added here as they are published. See <code>NAMING_CONVENTION.md</code> for the folder and URL structure.
+    New charts are added here as they are published. &ldquo;Awaiting file&rdquo; rows are planned entries whose
+    HTML has not been handed off yet. See <code>NAMING_CONVENTION.md</code> for the folder and URL structure.
   </footer>
 </div>
 </body>
